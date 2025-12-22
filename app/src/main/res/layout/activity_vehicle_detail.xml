@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2F4F7"
+    android:padding="20dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Logo -->
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="160dp"
+            android:layout_height="75dp"
+            android:src="@drawable/logorimark"
+            android:layout_marginTop="14dp"
+            android:contentDescription="App Logo" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vehicle Details"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#0D0D0D"
+            android:layout_marginTop="14dp"
+            android:letterSpacing="0.02" />
+
+        <!-- Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="22dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/details_card_modern"
+            android:layout_marginTop="26dp"
+            android:elevation="10dp">
+
+            <ImageView
+                android:layout_width="105dp"
+                android:layout_height="75dp"
+                android:src="@drawable/ic_car"
+                android:layout_gravity="center"
+                android:alpha="0.9" />
+
+            <TextView
+                android:id="@+id/txtDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#1A1A1A"
+                android:textSize="17sp"
+                android:layout_marginTop="20dp"
+                android:lineSpacingExtra="8dp"
+                android:padding="6dp"
+                android:gravity="start" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="20dp">
+
+            <!-- Call -->
+            <Button
+                android:id="@+id/btnCall"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:text="📞 Call"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#1565C0"
+                android:layout_marginEnd="10dp" />
+
+            <!-- WhatsApp -->
+            <Button
+                android:id="@+id/btnWhatsapp"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+
+                android:text="💬 WhatsApp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#25D366"
+                android:layout_marginStart="10dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F7FA"
+        android:padding="18dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgLogo"
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/logorimark"
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="App Logo" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vehicle Details"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#111111"
+                android:layout_marginTop="12dp"
+                android:letterSpacing="0.02" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@drawable/details_card_bg"
+                android:layout_marginTop="22dp"
+                android:elevation="8dp">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_car"
+                    android:layout_gravity="center"
+                    android:alpha="0.9" />
+
+                <TextView
+                    android:id="@+id/txtDetails"
+                    android:textColor="#333333"
+                    android:textSize="18sp"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="18dp">
+
+
+                <Button
+                    android:id="@+id/btnCall"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="📞 Call"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#1976D2"
+                    android:letterSpacing="0.02"
+                    android:layout_marginEnd="8dp"
+                    android:padding="6dp"
+                    android:background="@drawable/rounded_small_btn"/>
+
+
+                <Button
+                    android:id="@+id/btnWhatsapp"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="💬 WhatsApp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#25D366"
+                    android:letterSpacing="0.02"
+                    android:padding="6dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/rounded_small_btn"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    -->

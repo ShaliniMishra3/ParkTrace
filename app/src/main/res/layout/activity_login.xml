@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/logoLogin"
+        android:layout_width="250dp"
+        android:layout_height="130dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/rimark_vehicle2"
+        android:layout_marginTop="170dp"
+        />
+
+    <TextView
+        android:id="@+id/idEnter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Email Id or Mobile No"
+        app:layout_constraintTop_toBottomOf="@+id/logoLogin"
+        android:textSize="20sp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        />
+    <EditText
+        android:id="@+id/idInputBox"
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Enter email id or mobile no"
+        app:layout_constraintTop_toBottomOf="@+id/idEnter"
+        android:layout_marginTop="10dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/edittext_rect"
+
+        />
+
+    <TextView
+        android:id="@+id/idPsw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        app:layout_constraintTop_toBottomOf="@+id/idInputBox"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        />
+    <EditText
+        android:id="@+id/idPswInputBox"
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Password"
+        app:layout_constraintTop_toBottomOf="@+id/idPsw"
+        android:layout_marginTop="10dp"
+        android:layout_margin="20dp"
+        android:paddingEnd="10dp"
+        android:background="@drawable/edittext_rect"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password"
+        android:id="@+id/forgotPsw"
+        app:layout_constraintTop_toBottomOf="@+id/idPswInputBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="15dp"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:textColor="#1D2949"
+        />
+      <Button
+          android:id="@+id/loginBtn"
+          android:layout_width="200dp"
+          android:layout_height="60dp"
+          android:text="LOGIN"
+          android:textSize="20sp"
+          android:layout_marginTop="15dp"
+          android:backgroundTint="#E42020"
+          app:layout_constraintTop_toBottomOf="@+id/forgotPsw"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          />
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_register"
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

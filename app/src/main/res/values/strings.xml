@@ -1,0 +1,258 @@
+<resources>
+    <string name="app_name">ParkTrace</string>
+    <string name="text_register">Are you new user? Register here </string>
+    <string-array name="vehicle_types">
+        <item>Select Name</item>
+        <item>Car</item>
+        <item>Bike</item>
+        <item>Truck</item>
+        <item>Bus</item>
+        <item>Electric Vehicle</item>
+    </string-array>
+
+    <string-array name="vehicle_make_list">
+        <item>Select Name</item>
+        <item>Honda</item>
+        <item>Hyundai</item>
+        <item>Toyota</item>
+        <item>Mahindra</item>
+        <item>Maruti Suzuki</item>
+        <item>Tata</item>
+        <item>Kia</item>
+        <item>Renault</item>
+        <item>Nissan</item>
+        <item>Ford</item>
+        <item>Volkswagen</item>
+        <item>Skoda</item>
+        <item>BMW</item>
+        <item>Mercedes-Benz</item>
+        <item>Audi</item>
+        <item>MG</item>
+        <item>Jeep</item>
+        <item>Volvo</item>
+        <item>Land Rover</item>
+    </string-array>
+    <!-- Honda Models -->
+    <string-array name="honda_models">
+        <item>City</item>
+        <item>Amaze</item>
+        <item>Elevate</item>
+        <item>WR-V</item>
+    </string-array>
+    <!-- Hyundai Models -->
+    <string-array name="hyundai_models">
+        <item>i10</item>
+        <item>i20</item>
+        <item>Creta</item>
+        <item>Venue</item>
+        <item>Verna</item>
+    </string-array>
+    <!-- Toyota -->
+    <string-array name="toyota_models">
+        <item>Innova</item>
+        <item>Fortuner</item>
+        <item>Glanza</item>
+        <item>Hyryder</item>
+    </string-array>
+    <!-- Mahindra -->
+    <string-array name="mahindra_models">
+        <item>Thar</item>
+        <item>Scorpio</item>
+        <item>XUV300</item>
+        <item>XUV700</item>
+        <item>Bolero</item>
+    </string-array>
+    <!-- Maruti Suzuki -->
+    <string-array name="maruti_models">
+        <item>Swift</item>
+        <item>Dzire</item>
+        <item>Baleno</item>
+        <item>Fronx</item>
+        <item>Brezza</item>
+        <item>Ertiga</item>
+    </string-array>
+    <!-- Tata -->
+    <string-array name="tata_models">
+        <item>Nexon</item>
+        <item>Punch</item>
+        <item>Harrier</item>
+        <item>Safari</item>
+        <item>Altroz</item>
+    </string-array>
+    <!-- Kia -->
+    <string-array name="kia_models">
+        <item>Seltos</item>
+        <item>Sonet</item>
+        <item>Carens</item>
+    </string-array>
+    <!-- Renault -->
+    <string-array name="renault_models">
+        <item>Kwid</item>
+        <item>Kiger</item>
+        <item>Triber</item>
+    </string-array>
+
+    <!-- Nissan -->
+    <string-array name="nissan_models">
+        <item>Magnite</item>
+        <item>Kicks</item>
+    </string-array>
+
+    <!-- Ford -->
+    <string-array name="ford_models">
+        <item>EcoSport</item>
+        <item>Endeavour</item>
+    </string-array>
+
+    <!-- Volkswagen -->
+    <string-array name="vw_models">
+        <item>Polo</item>
+        <item>Vento</item>
+        <item>Tiguan</item>
+    </string-array>
+
+    <!-- Skoda -->
+    <string-array name="skoda_models">
+        <item>Rapid</item>
+        <item>Kushaq</item>
+        <item>Slavia</item>
+    </string-array>
+
+    <!-- BMW -->
+    <string-array name="bmw_models">
+        <item>3 Series</item>
+        <item>5 Series</item>
+        <item>X1</item>
+        <item>X5</item>
+    </string-array>
+
+    <!-- Mercedes -->
+    <string-array name="mercedes_models">
+        <item>C Class</item>
+        <item>E Class</item>
+        <item>GLA</item>
+    </string-array>
+
+    <!-- Audi -->
+    <string-array name="audi_models">
+        <item>A4</item>
+        <item>A6</item>
+        <item>Q3</item>
+        <item>Q5</item>
+    </string-array>
+
+    <!-- MG -->
+    <string-array name="mg_models">
+        <item>Hector</item>
+        <item>Astor</item>
+        <item>Gloster</item>
+    </string-array>
+
+    <!-- Jeep -->
+    <string-array name="jeep_models">
+        <item>Compass</item>
+        <item>Meridian</item>
+    </string-array>
+
+    <!-- Volvo -->
+    <string-array name="volvo_models">
+        <item>XC40</item>
+        <item>XC60</item>
+    </string-array>
+
+    <!-- Land Rover -->
+    <string-array name="landrover_models">
+        <item>Defender</item>
+        <item>Range Rover Evoque</item>
+        <item>Discovery Sport</item>
+    </string-array>
+
+    <string-array name="all_vehicle_models">
+        <item>Select Model</item>
+        <item>City</item>
+        <item>Amaze</item>
+        <item>Elevate</item>
+        <item>WR-V</item>
+
+        <item>i10</item>
+        <item>i20</item>
+        <item>Creta</item>
+        <item>Venue</item>
+        <item>Verna</item>
+
+        <item>Innova</item>
+        <item>Fortuner</item>
+        <item>Glanza</item>
+        <item>Hyryder</item>
+
+        <item>Thar</item>
+        <item>Scorpio</item>
+        <item>XUV300</item>
+        <item>XUV700</item>
+        <item>Bolero</item>
+
+        <item>Swift</item>
+        <item>Dzire</item>
+        <item>Baleno</item>
+        <item>Fronx</item>
+        <item>Brezza</item>
+        <item>Ertiga</item>
+
+        <item>Nexon</item>
+        <item>Punch</item>
+        <item>Harrier</item>
+        <item>Safari</item>
+        <item>Altroz</item>
+
+        <item>Seltos</item>
+        <item>Sonet</item>
+        <item>Carens</item>
+
+        <item>Kwid</item>
+        <item>Kiger</item>
+        <item>Triber</item>
+
+        <item>Magnite</item>
+        <item>Kicks</item>
+
+        <item>EcoSport</item>
+        <item>Endeavour</item>
+
+        <item>Polo</item>
+        <item>Vento</item>
+        <item>Tiguan</item>
+
+        <item>Rapid</item>
+        <item>Kushaq</item>
+        <item>Slavia</item>
+
+        <item>3 Series</item>
+        <item>5 Series</item>
+        <item>X1</item>
+        <item>X5</item>
+
+        <item>C Class</item>
+        <item>E Class</item>
+        <item>GLA</item>
+
+        <item>A4</item>
+        <item>A6</item>
+        <item>Q3</item>
+        <item>Q5</item>
+
+        <item>Hector</item>
+        <item>Astor</item>
+        <item>Gloster</item>
+
+        <item>Compass</item>
+        <item>Meridian</item>
+
+        <item>XC40</item>
+        <item>XC60</item>
+
+        <item>Defender</item>
+        <item>Range Rover Evoque</item>
+        <item>Discovery Sport</item>
+    </string-array>
+
+</resources>

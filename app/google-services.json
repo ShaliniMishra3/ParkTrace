@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "607941222366",
+    "project_id": "parktrace-f3dd7",
+    "storage_bucket": "parktrace-f3dd7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607941222366:android:43f5b6d1702aa78cb6c74f",
+        "android_client_info": {
+          "package_name": "com.example.parktrace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_VIofPYNGCSXYNGa2n2RmWqjOlY3oOD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

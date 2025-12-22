@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- remove only the purple activation color (keeps other behavior intact) -->
+    <style name="NoPurpleFocusOverlay" parent="ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox">
+        <!-- this removes the purple accent used when the field is focused -->
+        <item name="colorControlActivated">@android:color/transparent</item>
+    </style>
+
+
+
+</resources>
