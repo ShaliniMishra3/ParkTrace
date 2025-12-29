@@ -13,10 +13,20 @@ import androidx.core.view.ViewCompat
 import android.widget.Button
 import android.widget.ImageView
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
+import com.example.parktrace.model.VehicleEntity
 import com.example.parktrace.storage.VehicleStorage
+import com.example.parktrace.viewmodel.FirebaseVehicleViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class AddVechicle : AppCompatActivity() {
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_add_vechicle)
@@ -32,6 +42,8 @@ class AddVechicle : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        val firebaseViewModel =
+            ViewModelProvider(this)[FirebaseVehicleViewModel::class.java]
         //GET ALL INPUT FIELDS
         val inputOwner = findViewById<EditText>(R.id.idInputVehicle)
         val inputYear = findViewById<EditText>(R.id.idInputVehicleModelY)
@@ -39,9 +51,7 @@ class AddVechicle : AppCompatActivity() {
         val inputMobile=findViewById<EditText>(R.id.idInputMobile)
         val btnSubmit = findViewById<Button>(R.id.btnSubmit)
 
-        // val vehicleSpinner = findViewById<Spinner>(R.id.idInputVehicleType)
-        // 🔥 Spinner for Vehicle Model (kept same)
-        // 🔥 AutoCompleteTextView Vehicle Make
+
         val inputType = findViewById<AutoCompleteTextView>(R.id.idInputVehicleType)
 
         val typeList = resources.getStringArray(R.array.vehicle_types)
@@ -54,6 +64,10 @@ class AddVechicle : AppCompatActivity() {
         inputMake.setAdapter(adapterMake)
         val inputModel = findViewById<AutoCompleteTextView>(R.id.idInputVehicleModel)
 
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            Toast.makeText(this, "Login required", Toast.LENGTH_LONG).show()
+            finish()
+        }
 
         val allModels = resources.getStringArray(R.array.all_vehicle_models)
         val adapterModel = ArrayAdapter(this, android.R.layout.simple_list_item_1, allModels)
@@ -88,6 +102,11 @@ class AddVechicle : AppCompatActivity() {
             val newModelAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, modelList)
             inputModel.setAdapter(newModelAdapter)
         }
+
+
+
+
+
         btnSubmit.setOnClickListener {
             val owner = inputOwner.text.toString()
             val type = inputType.text.toString()          // AutoComplete input
@@ -96,13 +115,11 @@ class AddVechicle : AppCompatActivity() {
             val year = inputYear.text.toString()
             val number = inputNumber.text.toString()
             val mobile = inputMobile.text.toString()
-
             // Validation
             if (owner.isEmpty() || type.isEmpty() || make.isEmpty() || model.isEmpty() || year.isEmpty() || number.isEmpty() || mobile.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             // Owner limit validation
             val existingVehicles = VehicleStorage.loadVehicles(this)
             val ownerCount = existingVehicles.count { it.ownerName.equals(owner, ignoreCase = true) }
@@ -111,7 +128,22 @@ class AddVechicle : AppCompatActivity() {
                 Toast.makeText(this, "Owner already has 2 vehicles registered!", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
+
+            // ✅ CREATE FIREBASE ENTITY
+            val vehicleEntity = VehicleEntity(
+                ownerName = owner,
+                type = type,
+                make = make,
+                model = model,
+                year = year,
+                number = number,
+                mobile = mobile
+            )
+
+            // ✅ ADD TO FIREBASE
+            firebaseViewModel.addVehicle(vehicleEntity)
             // Send data
+            /*
             val dataIntent = Intent()
             dataIntent.putExtra("owner", owner)
             dataIntent.putExtra("type", type)
@@ -124,8 +156,21 @@ class AddVechicle : AppCompatActivity() {
 
             Toast.makeText(this, "Vehicle Added", Toast.LENGTH_SHORT).show()
 
-            finish()
+
+             */
+
         }
+        firebaseViewModel.success.observe(this) {
+            if (it == true) {
+                Toast.makeText(this, "Vehicle added to Firebase", Toast.LENGTH_SHORT).show()
+                finish() // go back to MainActivity
+            }
+        }
+
+        firebaseViewModel.error.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        }
+
     }
 
 }

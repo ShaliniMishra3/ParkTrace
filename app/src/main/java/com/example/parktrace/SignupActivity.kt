@@ -31,9 +31,7 @@ class SignupActivity : AppCompatActivity() {
         binding.loginBack.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
-        }
-
-        // Observe signup result
+        }// Observe signup result
         viewModel.signupResult.observe(this) {success ->
             if (success) {
                 Toast.makeText(this, "Registered Successfully", Toast.LENGTH_SHORT).show()
@@ -41,7 +39,6 @@ class SignupActivity : AppCompatActivity() {
                 finish()
             }
         }
-
         viewModel.errorMessage.observe(this) { error ->
             Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
         }
@@ -51,14 +48,11 @@ class SignupActivity : AppCompatActivity() {
             val address = binding.idInputAddress.text.toString().trim()
             val email = binding.idInputMail.text.toString().trim().replace(" ", "")
             val password = binding.idInputPassword.text.toString().trim()
-
-            // Validate form via ViewModel
             val formState = viewModel.validateForm(owner, email, mobile, address, password)
             if (!formState.isValid) {
                 Toast.makeText(this, formState.errorMessage, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
             viewModel.signup(owner, email, mobile, address, password)
         }
 

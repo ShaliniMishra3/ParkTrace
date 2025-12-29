@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F7FB"
+    android:padding="16dp">
+    <!-- HEADER -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="back"
+        android:layout_marginStart="10dp"
+        android:textColor="#2563EB"
+        android:id="@+id/VTLogin"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vehicle Reports"
+        android:textColor="#0F172A"
+        android:textSize="26sp"
+        android:layout_marginTop="15dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search, filter and analyze vehicle data"
+        android:textColor="#64748B"
+        android:textSize="13sp"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- FILTER TITLE -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FILTER VEHICLES"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:textColor="#2563EB"
+        android:letterSpacing="0.1"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- FILTER CARD -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="22dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        card_view:cardElevation="10dp"
+        card_view:cardBackgroundColor="#FFFFFF"
+        android:layout_marginBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- MAKE -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vehicle Make"
+                android:textSize="12sp"
+                android:textColor="#475569"/>
+
+            <AutoCompleteTextView
+                android:id="@+id/etMake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select vehicle make"
+                android:padding="14dp"
+                android:textSize="14sp"
+                android:background="@drawable/edittext_rect"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- MODEL -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vehicle Model"
+                android:textSize="12sp"
+                android:textColor="#475569"/>
+            <AutoCompleteTextView
+                android:id="@+id/etModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select vehicle model"
+                android:padding="14dp"
+                android:textSize="14sp"
+                android:background="@drawable/edittext_rect"/>
+            <!-- ACTION BUTTONS -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:weightSum="2">
+                <Button
+                    android:id="@+id/btnReset"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Reset"
+                    android:textStyle="bold"
+                    android:textColor="#2563EB"
+                    android:backgroundTint="#E0E7FF"
+                    android:layout_marginEnd="10dp"/>
+                <Button
+                    android:id="@+id/btnApplyFilter"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Apply Filter"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#2563EB"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <!-- RESULT HEADER -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VEHICLE RESULTS"
+        android:textSize="12sp"
+        android:layout_marginStart="10dp"
+        android:textStyle="bold"
+        android:textColor="#475569"
+        android:letterSpacing="0.1"
+        android:layout_marginBottom="10dp"/>
+    <!-- RESULT LIST -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvVehicles"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"/>
+
+    <!-- Export Format Spinner -->
+    <Spinner
+        android:id="@+id/spinnerFormat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:drawable/edit_text" />
+
+    <!-- Export Button -->
+    <Button
+        android:id="@+id/btnExportVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Export Report"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_margin="20dp"
+        android:backgroundTint="#16A34A"
+        android:textColor="#FFFFFF"/>
+</LinearLayout>

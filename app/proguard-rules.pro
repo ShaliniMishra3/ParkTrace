@@ -19,3 +19,17 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Firebase
+-keep class com.google.firebase.** { *; }
+-keep class com.google.android.gms.** { *; }
+
+# ML Kit / Barcode
+-keep class com.google.mlkit.** { *; }
+-keep class com.google.zxing.** { *; }
+
+# CameraX
+-keep class androidx.camera.** { *; }
+
+# Gson
+-keep class com.google.gson.** { *; }

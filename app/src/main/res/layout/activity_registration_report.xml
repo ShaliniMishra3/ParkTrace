@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#F8FAFC">
+
+    <TextView
+        android:id="@+id/RtoLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="back"
+        android:layout_marginStart="10dp"
+        android:textColor="#2563EB"
+        />
+    <!-- Page Title -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Registration Report"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textColor="#0F172A"
+        android:gravity="center"
+        android:paddingBottom="8dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Filter vehicle registrations by date"
+        android:textSize="14sp"
+        android:textColor="#64748B"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:paddingBottom="24dp" />
+    <!-- From Date -->
+    <EditText
+        android:id="@+id/etFromDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="📅 From Date"
+        android:focusable="false"
+        android:clickable="true"
+        android:padding="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textColor="#0F172A"
+        android:textSize="15sp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="12dp" />
+    <!-- To Date -->
+    <EditText
+        android:id="@+id/etToDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="📅 To Date"
+        android:focusable="false"
+        android:clickable="true"
+        android:padding="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textColor="#0F172A"
+        android:textSize="15sp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="20dp" />
+
+    <!-- Fetch Button -->
+    <Button
+        android:id="@+id/btnFetch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fetch Registration Report"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#2563EB"
+        android:paddingVertical="14dp"
+        android:layout_marginBottom="20dp" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E2E8F0"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Results List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRegistrations"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp" />
+
+
+    <!-- Export Format Spinner -->
+    <Spinner
+        android:id="@+id/spinnerFormat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@android:drawable/edit_text" />
+
+    <!-- Export Button -->
+    <Button
+        android:id="@+id/btnExport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Export Report"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_margin="20dp"
+        android:backgroundTint="#16A34A"
+        android:textColor="#FFFFFF"/>
+
+</LinearLayout>
+
+    <!--
+    <LinearLayout android:orientation="vertical"
+        android:padding="16dp"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <EditText
+            android:id="@+id/etFromDate"
+            android:focusable="false"
+            android:hint="From Date (timestamp)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/etToDate"
+            android:focusable="false"
+            android:hint="To Date (timestamp)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btnFetch"
+            android:text="Fetch Registration Report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRegistrations"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    -->

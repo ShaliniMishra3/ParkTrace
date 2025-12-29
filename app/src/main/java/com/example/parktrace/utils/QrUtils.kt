@@ -6,8 +6,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Bitmap.createBitmap
 import android.graphics.Canvas
-import android.graphics.Color
-import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -15,18 +13,15 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.parktrace.R
-
-import com.example.parktrace.model.VehicleModel
-
 import android.app.AlertDialog
 import android.util.Log
+import com.example.parktrace.model.VehicleEntity
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
 
 class QrUtils (private val context: Context){
-
-    fun generateVehicleQR(vehicle: VehicleModel) {
+    fun generateVehicleQR(vehicle: VehicleEntity) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.qr_design, null)
         val imgQR = dialogView.findViewById<ImageView>(R.id.imgQR)
         val title = dialogView.findViewById<TextView>(R.id.tvTitle)
@@ -39,7 +34,7 @@ class QrUtils (private val context: Context){
             Make:${vehicle.make}
             Model:${vehicle.model}
             Year:${vehicle.year}
-            MobileNo:${vehicle.mobileNo}
+            MobileNo:${vehicle.mobile}
         """.trimIndent()
 
         val writer = com.google.zxing.qrcode.QRCodeWriter()
@@ -52,7 +47,6 @@ class QrUtils (private val context: Context){
             }
         }
         imgQR.setImageBitmap(bmp)
-
         dialogView.measure(
             View.MeasureSpec.makeMeasureSpec(1080, View.MeasureSpec.EXACTLY),
             View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
@@ -71,7 +65,6 @@ class QrUtils (private val context: Context){
             .setPositiveButton("OK", null)
             .show()
     }
-
     private fun saveImageToGallery(bitmap: Bitmap) {
         val fileName = "VehicleQR_${System.currentTimeMillis()}.png"
         val fos: OutputStream
@@ -95,7 +88,6 @@ class QrUtils (private val context: Context){
         fos.close()
         Log.i("SAVE_IMAGE", "Image saved to gallery")
     }
-
 
 
 }

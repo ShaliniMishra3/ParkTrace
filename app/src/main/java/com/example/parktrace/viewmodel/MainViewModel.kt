@@ -20,15 +20,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val _editVehicleRequest = MutableLiveData<VehicleModel?>()
     val editVehicleRequest: LiveData<VehicleModel?> get() = _editVehicleRequest
 
-    fun requestEditVehicle(position: Int) {
-        val vehicle = filteredVehicles.value?.get(position)
-        _editVehicleRequest.value = vehicle
-    }
 
-
-    fun clearEditRequest() {
-        _editVehicleRequest.value = null
-    }
     fun loadVehicles() {
         allVehicles.clear()
         allVehicles.addAll(repository.loadVehicles())
@@ -78,11 +70,6 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
                 { it.type == type })
         }
     }
-
-    fun generateVehicleQR(vehicle: VehicleModel) {
-        QrUtils(getApplication()).generateVehicleQR(vehicle)
-        _qrSaved . value = true
-    }
     fun updateVehicleData(oldVehicle: VehicleModel, updatedVehicle: VehicleModel) {
         val index = allVehicles.indexOf(oldVehicle)
         if (index != -1) {
@@ -91,6 +78,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
             filteredVehicles.value = ArrayList(allVehicles)
         }
     }
+
 
 
 

@@ -8,14 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.parktrace.R
+import com.example.parktrace.model.VehicleEntity
 import com.example.parktrace.model.VehicleModel
 
 class VehicleAdapter(
     private val context: Context,
-    private val list:ArrayList<VehicleModel>,
+    private val list:ArrayList<VehicleEntity>,
     private val onDelete:(Int)-> Unit,
     private val onEdit:(Int)-> Unit,
-    private val onDownload:(VehicleModel)-> Unit
+    private val onDownload:(Int)-> Unit
     ): RecyclerView.Adapter<VehicleAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -47,7 +48,7 @@ class VehicleAdapter(
         holder.type.text = vehicle.type
         holder.make.text = vehicle.make
         holder.year.text = vehicle.year
-        holder.mobileNo.text=vehicle.mobileNo
+        holder.mobileNo.text=vehicle.mobile
         holder.btnDelete.setOnClickListener {
             val dialog=androidx.appcompat.app.AlertDialog.Builder(context)
                 .setTitle("Delete Vehicle?")
@@ -74,14 +75,12 @@ class VehicleAdapter(
 
         }
         holder.btnDownload.setOnClickListener {
-           // PdfGenerator.generateVehiclePdf(context,vehicle)
-            onDownload(vehicle)
+            onDownload(position)
         }
         holder.btnEdit.setOnClickListener {
             onEdit(position)
         }
     }
-
     override fun getItemCount(): Int {
         return list.size
     }

@@ -25,20 +25,49 @@ import androidx.core.content.ContextCompat
 import com.example.parktrace.databinding.ActivityLoginBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
+
+   // private val ADMIN_EMAIL = "admin@parktrace.com"
+   // private val ADMIN_PASSWORD = "admin@123"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val currentUser = FirebaseAuth.getInstance().currentUser
+        /*
         if (currentUser != null) {
             // User already logged in → go to Main
             startActivity(Intent(this, MainActivity::class.java))
             finish()
             return
         }
+
+         */
+
+        if (currentUser != null) {
+
+            FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(currentUser.uid)
+                .get()
+                .addOnSuccessListener { document ->
+
+                    val role = document.getString("role")
+
+                    if (role == "admin") {
+                        startActivity(Intent(this, AdminDashboardActivity::class.java))
+                    } else {
+                        startActivity(Intent(this, MainActivity::class.java))
+                    }
+                    finish()
+                }
+            return
+        }
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -140,7 +169,7 @@ class LoginActivity : AppCompatActivity() {
                     inputBox.filters = arrayOf()
                     return
                 }
-
+/*
                 if (text.matches(Regex("\\d+"))) {
                     inputBox.filters = arrayOf(InputFilter.LengthFilter(10))
                     if (text.length == 10 && !dialogShown) {
@@ -151,12 +180,17 @@ class LoginActivity : AppCompatActivity() {
                     }
                 } else {
                     inputBox.filters = arrayOf()
+                    /*
                     if (text.contains("@") && !text.endsWith("@gmail.com") && !dialogShown) {
                         dialogShown = true
                         showPopup("Please enter a valid Gmail ID ending with @gmail.com")
 
                     }
+
+                     */
                 }
+
+ */
             }
             override fun afterTextChanged(s: Editable?) {
             }
@@ -181,7 +215,7 @@ class LoginActivity : AppCompatActivity() {
                     }, 150)
                     return@setOnFocusChangeListener
                 }
-
+/*
                 if (text.matches(Regex("\\d+"))) {
                     if (text.length != 10) {
                         showPopup("Please Enter a valid 10-digit mobile number!")
@@ -191,6 +225,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                     return@setOnFocusChangeListener
                 }
+                /*
                 if (text.contains("@")) {
                     if (!text.endsWith("@gmail.com")) {
                         showPopup("Please enter a valid Gmail ID ending with @gmail.com")
@@ -200,16 +235,22 @@ class LoginActivity : AppCompatActivity() {
                     }
                     return@setOnFocusChangeListener
                 }
+                */
 
-                showPopup("Pleas enter a valid mobile number of Gmail ID!")
+               // showPopup("Pleas enter a valid mobile number of Gmail ID!")
                 inputBox.postDelayed({
                     inputBox.requestFocus()
                 }, 150)
 
+ */
+
             }
+
+
         }
 
         //
+        /*
         binding.tvLogin.setOnClickListener {
             val email = binding.idInputBox.text.toString().trim()
             val password = binding.idPswInputBox.text.toString().trim()
@@ -231,16 +272,27 @@ class LoginActivity : AppCompatActivity() {
                 }
         }
 
+         */
+
         binding.loginBtn.setOnClickListener {
 
             val email = binding.idInputBox.text.toString().trim()
             val password = binding.idPswInputBox.text.toString().trim()
 
+/*
+             if(email==ADMIN_EMAIL && password== ADMIN_PASSWORD){
+                 startActivity(Intent(this,AdminDashboardActivity::class.java))
+                 finish()
+                 return@setOnClickListener
+             }
+
+ */
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Enter email & password", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            /*
             auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
@@ -250,6 +302,50 @@ class LoginActivity : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Login failed: ${e.message}", Toast.LENGTH_LONG).show()
                 }
+
+             */
+
+            /*
+            FirebaseAuth.getInstance()
+                .signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+                    startActivity(Intent(this, AdminDashboardActivity::class.java))
+                    finish()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                }
+
+             */
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnSuccessListener { authResult ->
+
+                    val uid = authResult.user!!.uid
+
+                    // 🔥 CHECK ROLE FROM FIRESTORE
+                    FirebaseFirestore.getInstance()
+                        .collection("users")
+                        .document(uid)
+                        .get()
+                        .addOnSuccessListener { document ->
+
+                            val role = document.getString("role")
+
+                            if (role == "admin") {
+                                startActivity(Intent(this, AdminDashboardActivity::class.java))
+                            } else {
+                                startActivity(Intent(this, MainActivity::class.java))
+                            }
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Failed to fetch user role", Toast.LENGTH_SHORT).show()
+                        }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                }
+
         }
     }
 

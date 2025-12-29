@@ -1,5 +1,6 @@
 package com.example.parktrace.model
 
+
 data class VehicleModel (
     var ownerName:String,
     val type:String,

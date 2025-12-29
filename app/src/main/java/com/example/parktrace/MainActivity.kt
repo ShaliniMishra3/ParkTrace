@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
-import android.widget.Spinner
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -18,25 +18,29 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.parktrace.adapter.VehicleAdapter
+import com.example.parktrace.model.VehicleEntity
 import com.example.parktrace.model.VehicleModel
 import com.google.android.material.snackbar.Snackbar
 import com.example.parktrace.utils.QrUtils
-import com.example.parktrace.viewmodel.MainViewModel
+import com.example.parktrace.viewmodel.FirebaseVehicleViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var viewModel: MainViewModel
+
     private lateinit var qrUtils: QrUtils
-    val vehicleList = ArrayList<VehicleModel>()
+
     lateinit var adapter: VehicleAdapter
+
+    private val firebaseVehicleList = ArrayList<VehicleEntity>()
+    private lateinit var firebaseViewModel: FirebaseVehicleViewModel
 
     private val addVehicleLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK && result.data != null) {
             val data = result.data
-            val vehicle = VehicleModel(
+            val vehicleEntity = VehicleEntity(
                 data?.getStringExtra("owner") ?: "",
                 data?.getStringExtra("type") ?: "",
                 data?.getStringExtra("make") ?: "",
@@ -46,8 +50,8 @@ class MainActivity : AppCompatActivity() {
                 data?.getStringExtra("mobileNo")?:""
 
             )
+            firebaseViewModel.addVehicle(vehicleEntity)
 
-            viewModel.addVehicle(vehicle)
         }
     }
 
@@ -69,38 +73,39 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        // 1️⃣ Initialize Firebase ViewModel FIRST
+        firebaseViewModel = ViewModelProvider(this)[FirebaseVehicleViewModel::class.java]
         qrUtils = QrUtils(this)
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        viewModel.filteredVehicles.observe(this) { list ->
-            vehicleList.clear()
-            vehicleList.addAll(list)
-            adapter.notifyDataSetChanged()
-        }
-        viewModel.loadVehicles()
-
         findViewById<Button>(R.id.btnScanQR).setOnClickListener {
             val intent = Intent(this, QRScannerActivity::class.java)
             qrScanLauncher.launch(intent)
         }
-        viewModel.editVehicleRequest.observe(this) { vehicle ->
-            vehicle?.let { showEditDialog(it) }
-        }
 
         val recyclerView = findViewById<RecyclerView>(R.id.rvVehicles)
         adapter = VehicleAdapter(
-            this, vehicleList,
-            onDelete = { position ->
-                viewModel.deleteVehicle(position)
+            this, firebaseVehicleList,
+            onDelete = {position ->
+                if (position < 0 || position >= firebaseVehicleList.size) return@VehicleAdapter
+                val vehicleEntity = firebaseVehicleList[position]
+                firebaseViewModel.deleteVehicle(vehicleEntity)
+                firebaseVehicleList.removeAt(position)
+                adapter.notifyItemRemoved(position)
+
+                Snackbar.make(recyclerView, "Vehicle deleted", Snackbar.LENGTH_LONG)
+                    .setAction("UNDO") {
+                        firebaseViewModel.loadVehicles()
+                    }.show()
+
 
             },
-            onEdit = { position -> viewModel.requestEditVehicle(position)},
-            onDownload = {vehicle->
-                qrUtils.generateVehicleQR(vehicle)
-                AlertDialog.Builder(this)
-                    .setTitle("Success")
-                    .setMessage("QR saved to gallery")
-                    .setPositiveButton("OK", null)
-                    .show()}
+            onEdit = { position ->
+                val entity = firebaseVehicleList[position]
+                showEditDialog(entity)
+            },
+            onDownload = { position ->
+                val vehicleEntity = firebaseVehicleList[position]
+                qrUtils.generateVehicleQR(vehicleEntity)
+            }
         )
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
@@ -115,9 +120,20 @@ class MainActivity : AppCompatActivity() {
             intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
-    }
+        firebaseViewModel.vehicles.observe(this) { entityList ->
+            firebaseVehicleList.clear()
+            firebaseVehicleList.addAll(entityList)
+            //vehicleList.clear()
+            adapter.notifyDataSetChanged()
+        }
+        //firebaseViewModel.loadVehicles()
+        firebaseViewModel.startListening()
+        firebaseViewModel.success.observe(this) {
+           // firebaseViewModel.loadVehicles()
+        }
 
-    private fun showEditDialog(vehicle: VehicleModel) {
+    }
+    private fun showEditDialog(vehicle: VehicleEntity) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_vehicle, null)
         val edtOwner = dialogView.findViewById<EditText>(R.id.edtOwner)
         val edtYear = dialogView.findViewById<EditText>(R.id.edtYear)
@@ -135,11 +151,10 @@ class MainActivity : AppCompatActivity() {
         edtMake.setAdapter(ArrayAdapter(this, android.R.layout.simple_list_item_1, makeList))
         edtModel.setAdapter(ArrayAdapter(this, android.R.layout.simple_list_item_1, modelList))
 
-        // Set current values
         edtOwner.setText(vehicle.ownerName)
         edtYear.setText(vehicle.year)
         edtNumber.setText(vehicle.number)
-        edtMobile.setText(vehicle.mobileNo)
+        edtMobile.setText(vehicle.mobile)
         edtType.setText(vehicle.type, false)
         edtMake.setText(vehicle.make, false)
         edtModel.setText(vehicle.model, false)
@@ -148,18 +163,19 @@ class MainActivity : AppCompatActivity() {
             .setView(dialogView)
             .setTitle("Edit Vehicle")
             .setPositiveButton("Save") { _, _ ->
-                val updated = VehicleModel(
-                    edtOwner.text.toString(),
-                    edtType.text.toString(),
-                    edtMake.text.toString(),
-                    edtModel.text.toString(),
-                    edtYear.text.toString(),
-                    edtNumber.text.toString(),
-                    edtMobile.text.toString()
+                val updatedVehicle = VehicleEntity(
+                    id = vehicle.id,   // 🔥 VERY IMPORTANT
+                    ownerName = edtOwner.text.toString(),
+                    type = edtType.text.toString(),
+                    make = edtMake.text.toString(),
+                    model = edtModel.text.toString(),
+                    year = edtYear.text.toString(),
+                    number = edtNumber.text.toString(),
+                    mobile = edtMobile.text.toString()
                 )
-                viewModel.updateVehicleData(vehicle, updated) // MVVM update
+                firebaseViewModel.updateVehicle(updatedVehicle)
             }
-            .setNegativeButton("Cancel", null)
+                .setNegativeButton("Cancel", null)
             .show()
     }
 
@@ -171,25 +187,36 @@ class MainActivity : AppCompatActivity() {
                 target: RecyclerView.ViewHolder
             ) = false
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-             //new one
-                val pos = viewHolder.adapterPosition
 
-                // ✅ Tell ViewModel to delete
-                viewModel.deleteVehicle(pos)
+                val pos = viewHolder.adapterPosition
+                if (pos == RecyclerView.NO_POSITION || pos >= firebaseVehicleList.size) return
+
+                val vehicleEntity = firebaseVehicleList[pos]
+
+                firebaseViewModel.deleteVehicle(vehicleEntity)
+
+                firebaseVehicleList.removeAt(pos)
+                adapter.notifyItemRemoved(pos)
 
                 Snackbar.make(recyclerView, "Vehicle deleted", Snackbar.LENGTH_LONG)
                     .setAction("UNDO") {
-                        viewModel.undoDelete()
+                       // firebaseViewModel.loadVehicles()
                     }.show()
 
             }
         }
         ItemTouchHelper(swipeHelper).attachToRecyclerView(recyclerView)
+        firebaseViewModel.success.observe(this) { success ->
+            if (success) {
+                Toast.makeText(this, "Vehicle deleted successfully", Toast.LENGTH_SHORT).show()
+                //firebaseViewModel.loadVehicles()  // refresh list
+            }
+        }
+        firebaseViewModel.error.observe(this) { error ->
+            Toast.makeText(this, "Error: $error", Toast.LENGTH_LONG).show()
+        }
+
     }
-
-
-
-
 
 }
 
